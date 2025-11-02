@@ -43,31 +43,41 @@ Within this directory, each file specified in the configuration file will be bac
 
 A log file will be created in the temporary directory (`/tmp/backup.log`) and emailed to the address specified in the configuration file.
 
-## Installation
+## Installation   
 
 ### Add `srnjak` apt source
 
 To add the `srnjak` apt source to your system, follow these steps:
 
 1. Update the package index:
-    ```
-    sudo apt-get update
-    ```
+
+   ```bash
+   sudo apt-get update
+   ```
 
 2. Install the required packages:
-    ```
-    sudo apt-get install -y ca-certificates gnupg2 curl
-    ```
+
+   ```bash
+   sudo apt-get install -y ca-certificates gnupg curl
+   ```
 
 3. Add the `srnjak` repository to your system's package sources:
-    ```
-    echo "deb https://ci.srnjak.com/nexus/repository/apt-release release main" | sudo tee /etc/apt/sources.list.d/srnjak.list
-    ```
+
+   ```bash
+   echo "deb [signed-by=/usr/share/keyrings/srnjak.gpg] \
+   https://ci.srnjak.com/nexus/repository/apt-release release main" \
+   | sudo tee /etc/apt/sources.list.d/srnjak.list
+   ```
 
 4. Add the repository's GPG key to your system's trusted keys:
-    ```
-    curl -sSL https://ci.srnjak.com/nexus/repository/public/gpg/public.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/srnjak.gpg
-    ```
+
+   ```bash
+   sudo mkdir -p /usr/share/keyrings
+   curl -sSL \
+     https://ci.srnjak.com/nexus/repository/public/gpg/public.gpg.key \
+     | sudo gpg --dearmor \
+     -o /usr/share/keyrings/srnjak.gpg
+   ```
 
 ### Install `files-backup`
 
